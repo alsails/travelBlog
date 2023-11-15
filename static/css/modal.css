@@ -1,0 +1,166 @@
+.modal {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+
+    background-color: rgba(0, 0, 0, .5);
+    position: fixed;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    justify-items: center;
+    align-items: center;
+}
+
+.modal_opened {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+}
+
+.modal__container {
+    width: 500px;
+    max-height: 80%;
+
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 25px 0 #00000026;
+
+    margin: 100px auto 0 auto;
+    position: relative;
+}
+
+.modal__container_signup {
+    max-height: 80%;
+}
+
+.modal__title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 34px;
+
+    color: #000000;
+
+    padding: 40px 0 20px;
+    margin: 0;
+
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+
+    width: 400px;
+
+    margin: 0 50px;
+}
+
+.form__lable {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+
+    padding: 20px 0 7px;
+    margin: 0;
+}
+
+
+.form__input {
+    height: 30px;
+
+    border-radius: 5px;
+    border-color: #bbbbbb;
+    transition: background-color .5s linear;
+    padding-bottom: 5px;
+}
+
+.form__input::placeholder {
+  color: gray;
+    padding: 0 0 0 5px;
+}
+
+.form__input:active{
+    border-color: #000000;
+}
+
+.form__input:hover {
+    cursor: pointer;
+    background-color: rgba(206, 206, 206, .3);
+}
+
+.form__error-container {
+    padding-top: 20px;
+    height: 40px;
+}
+
+.form__error {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: red;
+
+    padding: 0;
+    margin: 0;
+}
+
+.form__button {
+    margin-top: 80px;
+    padding: 15px 40px;
+
+    border-radius: 5px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+
+    background-color: transparent;
+    transition: background-color .5s linear;
+}
+
+.form__button:hover {
+    background-color: rgba(206, 206, 206, .3);
+    cursor: pointer;
+}
+
+.modal__close {
+    position: absolute;
+    background-image: url("./Close.svg");
+    top: -35px;
+    right: -35px;
+    background-size: 27px 27px;
+    background-repeat:no-repeat;
+    background-position: center;
+    background-color: transparent;
+    border: 0;
+
+    width: 27px;
+    height: 27px;
+
+    cursor: pointer;
+}
+
+.form__another {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+
+    padding: 10px 0 20px;
+    margin: 0;
+
+    text-align: center;
+}
+
+.form__another:hover {
+    cursor: pointer;
+}
+
+.container {
+    height: 100%;
+}

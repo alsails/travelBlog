@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/news.css' %}">
+    <title>Тревел-новости</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Roboto:wght@100;300;400;500;600&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/modal.css' %}">
+</head>
+<body>
+<header class="header">
+    <a class="header__username">{{ username }}</a>
+    <a class="header__title" href="/"><h1 class="header__title">Всё о путешествиях</h1></a>
+    <nav class="nav">
+        <ul class="nav-links nav-links_header">
+            <li class="nav-link"><a class="nav-link" href="/">Блог</a></li>
+            <li class="nav-link"><a class="nav-link nav-link_active" href="/news">Тревел-новости</a></li>
+            {% if user.is_authenticated %}
+                <li class="nav-link"><a class="nav-link" href="/signout">Выйти</a></li>
+            {% else %}
+                <li class="nav-link">
+                    <button class="nav-link nav-link_button" onclick="openModal()">Войти</button>
+                </li>
+            {% endif %}
+                <li class="nav-link nav-link_translate">
+                    <p data-google-lang="ru" class="nav-link nav-link_language nav-link_language-active">RU</p>
+                    <p data-google-lang="en" class="nav-link nav-link_language">EN</p>
+                </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+    <section class="news">
+        {% block content %}
+            <div class="news__promo_container">
+                {% for new in news_list|slice:":5" %}
+                    <div class="new__container new__count_{{ forloop.counter }}">
+                        <a class="new__container" href="{% url 'new_detail' new.pk %}">
+                            <img class="new__img" alt='{{ new.title }}' src='{{ new.image }}'>
+                            <p class="new__title">{{ new.title }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <h2 class="news__title">Тревел-новости</h2>
+            <div class="news__list">
+                {% for new in news_list %}
+                    <div class="new__list">
+                        <img class="new__list_img" alt='{{ new.title }}' src='{{ new.image }}'>
+                        <div class="new__list_info">
+                            <h2 class="new__list_title"><a class="new__list_title"
+                                                           href="{% url 'new_detail' new.pk %}">{{ new.title }}</a></h2>
+                            <div class="new__list_text">{{ new.body|safe }}</div>
+                            <p class="new__list_date">
+                                {% if new.time.date == today %}
+                                    {{ new.time|time:"H:i" }}
+                                {% elif new.time.date == yesterday %}
+                                    Вчера {{ new.time|time:"H:i" }}
+                                {% else %}
+                                    {{ new.time }}
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endblock content %}
+    </section>
+</main>
+<footer class="footer">
+    <nav class="nav">
+        <ul class="nav-links">
+            <li class="nav-link"><a class="nav-link" href="/">Блог</a></li>
+            <li class="nav-link"><a class="nav-link nav-link_active" href="/news">Тревел-новости</a></li>
+        </ul>
+    </nav>
+</footer>
+
+<div id="signupModal" class="modal">
+    <div class="modal__container modal__container_signup">
+        <div class="container">
+            <h2 class="modal__title">Регистрация</h2>
+            <button class="modal__close" onclick="closeModal()"></button>
+            <form method="post" class="form" id="signupForm">
+                {% csrf_token %}
+
+                <label class="form__lable" for="username">Введите имя пользователя</label>
+                <input class="form__input" name="username" id="username" placeholder="Имя пользователя">
+                <p id="username_error" class="form__error">{{ form.username.errors }}</p>
+
+                <label class="form__lable" for="email">Введите email</label>
+                <input class="form__input" name="email" id="email" placeholder="Email">
+                <p id="email_error" class="form__error">{{ form.email.errors }}</p>
+
+                <label class="form__lable" for="password1">Введите пароль</label>
+                <input class="form__input" name="password1" id="password1" placeholder="Пароль">
+                <p id="password1_error" class="form__error">{{ form.password1.errors }}</p>
+
+                <label class="form__lable" for="password2">Повторите пароль</label>
+                <input class="form__input" name="password2" id="password2" placeholder="Пароль">
+                <p id="password2_error" class="form__error">{{ form.password2.errors }}</p>
+
+                <button class="form__button" type="submit">Отправить</button>
+
+                <p class="form__another">Войти</p>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src={% static "js/googleTranslate.js" %}></script>
+<script src="//translate.google.com/translate_a/element.js?cb=TranslateInit"></script>
+<script src="{% static 'js/modal.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="{% static 'js/signin.js' %}"></script>
+<script src="{% static 'js/signup.js' %}"></script>
+<script src="{% static 'js/autoHeight.js' %}"></script>
+</body>
+</html>

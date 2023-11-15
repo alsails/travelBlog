@@ -1,0 +1,27 @@
+version: '3.11'
+
+services:
+  django:
+    image:  django_blog:0.0.1
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+        - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root  # Добавьте эту строку
+      MYSQL_DATABASE: blogs
+      MYSQL_PASSWORD: root
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
